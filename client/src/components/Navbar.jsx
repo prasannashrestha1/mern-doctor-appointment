@@ -54,7 +54,7 @@ const Navbar = () => {
               <FaAngleDown />
 
               <div className="absolute top-10 rounded-xl text-gray-700 bg-stone-100 text-base font-medium hidden group-hover:block">
-                <div className="min-w-42 p-3 flex flex-col gap-1 ">
+                <div className="min-w-45 p-3 flex flex-col gap-1 ">
                   <p
                     onClick={() => navigate("/my-profile")}
                     className="hover:text-black cursor-pointer py-1 px-2 rounded-lg hover:bg-stone-200"

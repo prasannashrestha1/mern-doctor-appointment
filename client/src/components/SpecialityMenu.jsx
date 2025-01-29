@@ -13,7 +13,7 @@ const SpecialityMenu = () => {
         </p>
       </div>
 
-      <div className="flex justify-center gap-6 w-max">
+      {/* <div className="flex justify-center gap-6 w-max">
         {specialityData.map((item, index) => (
           <Link
             key={index}
@@ -24,7 +24,7 @@ const SpecialityMenu = () => {
             <p>{item.speciality}</p>
           </Link>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };
