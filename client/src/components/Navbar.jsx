@@ -10,9 +10,13 @@ const Navbar = () => {
   const [token, setToken] = useState(true);
 
   return (
-    <div className="w-full">
+    <div className="w-full sticky top-0 bg-white z-10">
       <div className=" flex justify-between items-center max-w-[1440px] border-b text-sm md:text-md border-b-gray-400 p-4 mx-auto">
         <img
+          onClick={() => {
+            navigate("/");
+            scrollTo(0, 0);
+          }}
           src={assets.logo}
           className="w-[140px] h-fit items-center cursor-pointer"
         />
@@ -25,7 +29,7 @@ const Navbar = () => {
             HOME
           </NavLink>
           <NavLink
-            to="/doctors"
+            to="/doctor"
             className="h-fit border-b-2 border-transparent hover:text-blue-500 hover:border-blue-400 transition ease-in-out duration-500 "
           >
             All DOCTORS

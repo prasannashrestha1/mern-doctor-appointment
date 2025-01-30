@@ -43,7 +43,7 @@ const Footer = () => {
                 +977-9860270060
               </Link>
               <Link
-                to="/about"
+                to="mailto:shresthaprasanna230@gmail.com"
                 className="hover:text-stone-900 cursor-pointer text-nowrap"
               >
                 <p>shresthaprasanna230@gmail.com</p>
