@@ -9,6 +9,7 @@ import Navbar from "./components/Navbar";
 import PageNotFound from "./pages/PageNotFound";
 import About from "./pages/About";
 import Footer from "./components/Footer";
+import Contact from "./pages/Contact";
 
 const App = () => {
   return (
@@ -21,7 +22,7 @@ const App = () => {
           <Route path="/doctor" element={<Doctors />} />
           <Route path="/about" element={<About />} />
           <Route path="/doctor/:speciality" element={<Doctors />} />
-          <Route path="/" element={<Home />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<PageNotFound />} />
           <Route path="/appointment" element={<MyAppointments />} />
           <Route path="/appointment/:docID" element={<Appointment />} />
