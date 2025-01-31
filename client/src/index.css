@@ -15,3 +15,7 @@ h1 {
 .active{
     @apply border-primary text-primary
 }
+
+.inpt{
+   @apply border-2 p-2 outline-none rounded-xl focus:border-primary border-slate-300
+}

@@ -13,11 +13,11 @@ const SpecialityMenu = () => {
         </p>
       </div>
 
-      <div className="flex justify-center gap-6 w-max">
+      <div className="flex justify-center gap-6 w-full overflow-x-scroll">
         {specialityData.map((item, index) => (
           <Link
             key={index}
-            className="flex flex-col gap-3 items-center cursor-pointer hover:translate-y-3 transition-all duration-500 text-xs min-w-0 max-w-[100vw] justify-center flex-shrink-0"
+            className=" mb-5 flex flex-col gap-3 items-center cursor-pointer hover:translate-y-3 transition-all duration-500 text-xs min-w-0 max-w-[100vw] justify-center flex-shrink-0"
             to={`doctor/${item.speciality}`}
           >
             <img src={item.image} className="w-16 sm:w-24 h-16 sm:h-24" />

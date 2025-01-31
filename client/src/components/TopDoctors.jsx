@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
+import DocCard from "./DocCard";
 
 const TopDoctors = () => {
   const { doctors } = useContext(AppContext);
@@ -13,23 +14,20 @@ const TopDoctors = () => {
       </div>
       <div className=" w-full grid max-[500px]:grid-cols-1 grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 ">
         {doctors.slice(0, 10).map((item, index) => (
-          <Link
-            to={`/appointment/${item._id}`}
+          <div
+            onClick={() => {
+              scrollTo(0, 0);
+              navigate(`/appointment/${item._id}`);
+            }}
             key={index}
-            className="border border-[#C9D8FF] rounded-2xl hover:shadow-lg hover:scale-102 transition-all ease-in-out duration-300"
+            className="cursor-pointer"
           >
-            <div className="flex items-center justify-end bg-[#EAEFFF] rounded-t-2xl ">
-              <img src={item.image} />
-            </div>
-            <div className="p-4 flex flex-col gap-1">
-              <div className="text-green-600 flex gap-2 mb-1 items-center">
-                <div className="w-2 h-2 bg-green-600 rounded-full"></div>
-                <p>Available</p>
-              </div>
-              <h2 className=" text-2xl">{item.name}</h2>
-              <p className="text-gray-700">{item.speciality}</p>
-            </div>
-          </Link>
+            <DocCard
+              name={item.name}
+              speciality={item.speciality}
+              image={item.image}
+            />
+          </div>
         ))}
       </div>
       <button

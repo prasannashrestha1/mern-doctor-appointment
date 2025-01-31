@@ -5,7 +5,7 @@ const Contact = () => {
   return (
     <div className="w-full flex flex-col gap-12 text-center text-slate-600">
       <h2 className="text-3xl ">
-        ABOUT <b>US</b>
+        Contact <b>US</b>
       </h2>
       <div className="flex flex-col md:flex-row gap-8 items-center justify-center">
         <img src={assets.contact_image} className=" md:w-[400px] rounded-xl " />
