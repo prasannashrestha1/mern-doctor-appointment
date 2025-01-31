@@ -10,6 +10,7 @@ import PageNotFound from "./pages/PageNotFound";
 import About from "./pages/About";
 import Footer from "./components/Footer";
 import Contact from "./pages/Contact";
+import MyProfile from "./pages/MyProfile";
 
 const App = () => {
   return (
@@ -23,8 +24,9 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/doctor/:speciality" element={<Doctors />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/my-profile" element={<MyProfile />} />
           <Route path="*" element={<PageNotFound />} />
-          <Route path="/appointment" element={<MyAppointments />} />
+          <Route path="/my-appointments" element={<MyAppointments />} />
           <Route path="/appointment/:docId" element={<Appointment />} />
         </Routes>
         <Footer />
