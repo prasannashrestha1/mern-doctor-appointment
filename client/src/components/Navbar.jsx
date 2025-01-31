@@ -3,6 +3,7 @@ import { assets } from "./../assets/assets";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FaAngleDown } from "react-icons/fa";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { IoClose } from "react-icons/io5";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -22,28 +23,16 @@ const Navbar = () => {
         />
         {/* navigation */}
         <div className="hidden md:flex font-semibold transition ease-in-out duration-700 gap-4 items-center">
-          <NavLink
-            to="/"
-            className="h-fit border-b-2 border-transparent hover:text-blue-500 hover:border-blue-400 transition ease-in-out duration-500 "
-          >
+          <NavLink to="/" className="navlink">
             HOME
           </NavLink>
-          <NavLink
-            to="/doctor"
-            className="h-fit border-b-2 border-transparent hover:text-blue-500 hover:border-blue-400 transition ease-in-out duration-500 "
-          >
+          <NavLink to="/doctor" className="navlink">
             All DOCTORS
           </NavLink>
-          <NavLink
-            to="/about"
-            className="h-fit border-b-2 border-transparent hover:text-blue-500 hover:border-blue-400 transition ease-in-out duration-500 "
-          >
+          <NavLink to="/about" className="navlink">
             ABOUT
           </NavLink>
-          <NavLink
-            to="/contact"
-            className="h-fit border-b-2 border-transparent hover:text-blue-500 hover:border-blue-400 transition ease-in-out duration-500 "
-          >
+          <NavLink to="/contact" className="navlink">
             CONTACT
           </NavLink>
         </div>
@@ -88,7 +77,62 @@ const Navbar = () => {
               Create Account
             </button>
           )}
-          <RxHamburgerMenu className="block md:hidden w-[20px] h-[20px]" />
+          <RxHamburgerMenu
+            className="block md:hidden w-[20px] h-[20px] cursor-pointer"
+            onClick={() => setshowMenu(true)}
+          />
+          {showMenu && (
+            <div
+              className={`${
+                showMenu ? "fixed w-full h-full" : "w-0 h-0"
+              } md:hidden right-0 top-0 bottom-0s z-20 overflow-hidden  bg-white transition-all ease-in-out p-10`}
+            >
+              <div className="flex justify-between items-center mb-20">
+                <img
+                  onClick={() => {
+                    navigate("/");
+                    setshowMenu(false);
+                  }}
+                  src={assets.logo}
+                  className="cursor-pointer"
+                />
+                <IoClose
+                  className="w-5 h-5 cursor-pointer"
+                  onClick={() => setshowMenu(false)}
+                />
+              </div>
+              <div className="flex flex-col items-center gap-4 text-lg text-slate-700">
+                <NavLink
+                  onClick={() => setshowMenu(false)}
+                  to="/"
+                  className=" w-fit navlink"
+                >
+                  HOME
+                </NavLink>
+                <NavLink
+                  onClick={() => setshowMenu(false)}
+                  to="/doctor"
+                  className=" w-fit navlink"
+                >
+                  ALL DOCTORS
+                </NavLink>
+                <NavLink
+                  onClick={() => setshowMenu(false)}
+                  to="/about"
+                  className=" w-fit navlink"
+                >
+                  ABOUT
+                </NavLink>
+                <NavLink
+                  onClick={() => setshowMenu(false)}
+                  to="/contact"
+                  className=" w-fit navlink"
+                >
+                  CONTACT
+                </NavLink>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

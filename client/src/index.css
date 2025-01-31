@@ -28,5 +28,9 @@ h1 {
 @apply w-full px-4 py-2 rounded-xl border border-slate-300 hover:border-primary hover:bg-primary hover:scale-101 hover:text-white cursor-pointer transition ease-in duration-300 hover:shadow-xl
 }
 .btn-failure {
-@apply w-full px-4 py-2 rounded-xl border border-slate-300 hover:border-primary bg-red-100 hover:bg-red-500 hover:scale-101 hover:border-red-500 text-red-500 hover:text-white cursor-pointer transition ease-in duration-300 hover:shadow-xl
+@apply w-full px-4 py-2 rounded-xl border border-slate-300 bg-red-100 hover:bg-red-500 hover:scale-101 hover:border-red-500 text-red-500 hover:text-white cursor-pointer transition ease-in duration-300 hover:shadow-xl
+}
+
+.navlink{
+  @apply  h-fit border-b-2 border-transparent hover:text-blue-500 hover:border-blue-400 transition ease-in-out duration-500 
 }
