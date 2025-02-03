@@ -35,82 +35,82 @@ const Doctors = () => {
         >
           Filters
         </div>
-        {resFilter ? (
-          <div className="w-full sm:max-w-[200px] flex flex-col gap-2 list-none">
-            <Link
-              to="/doctor"
-              className={`${
-                !speciality
-                  ? "bg-indigo-100 hover:bg-indigo-100 text-black"
-                  : ""
-              } w-full border-2 px-3 py-2 border-stone-200 rounded-lg cursor-pointer hover:bg-blue-50`}
-            >
-              All Doctors
-            </Link>
-            <Link
-              to="/doctor/General physician"
-              className={`${
-                speciality === "General physician"
-                  ? "bg-indigo-100 hover:bg-indigo-100 text-black"
-                  : ""
-              } w-full border-2 px-3 py-2 border-stone-200 rounded-lg cursor-pointer hover:bg-blue-50`}
-            >
-              General Physician
-            </Link>
-            <Link
-              to="/doctor/Gynecologist"
-              className={`${
-                speciality === "Gynecologist"
-                  ? "bg-indigo-100 hover:bg-indigo-100 text-black"
-                  : ""
-              } w-full border-2 px-3 py-2 border-stone-200 rounded-lg cursor-pointer hover:bg-blue-50`}
-            >
-              Gynecologist
-            </Link>
-            <Link
-              to="/doctor/Dermatologist"
-              className={`${
-                speciality === "Dermatologist"
-                  ? "bg-indigo-100 hover:bg-indigo-100 text-black"
-                  : ""
-              } w-full border-2 px-3 py-2 border-stone-200 rounded-lg cursor-pointer hover:bg-blue-50`}
-            >
-              Dermatologist
-            </Link>
-            <Link
-              to="/doctor/Pediatricians"
-              className={`${
-                speciality === "Pediatricians"
-                  ? "bg-indigo-100 hover:bg-indigo-100 text-black"
-                  : ""
-              } w-full border-2 px-3 py-2 border-stone-200 rounded-lg cursor-pointer hover:bg-blue-50`}
-            >
-              Pediatricians
-            </Link>
-            <Link
-              to="/doctor/Neurologist"
-              className={`${
-                speciality === "Neurologist"
-                  ? "bg-indigo-100 hover:bg-indigo-100 text-black"
-                  : ""
-              } w-full border-2 px-3 py-2 border-stone-200 rounded-lg cursor-pointer hover:bg-blue-50`}
-            >
-              Neurologist
-            </Link>
-            <Link
-              to="/doctor/Gastroenterologist"
-              className={`${
-                speciality === "Gastroenterologist"
-                  ? "bg-indigo-100 hover:bg-indigo-100 text-black"
-                  : ""
-              } w-full border-2 px-3 py-2 border-stone-200 rounded-lg cursor-pointer hover:bg-blue-50`}
-            >
-              Gastroenterologist
-            </Link>
-          </div>
-        ) : (
-          ""
-        )}
+
+        <div
+          className={`w-full sm:max-w-[200px] flex flex-col gap-2 list-none ${
+            resFilter ? "flex" : "hidden sm:flex"
+          }`}
+        >
+          <Link
+            to="/doctor"
+            className={`${
+              !speciality ? "bg-indigo-100 hover:bg-indigo-100 text-black" : ""
+            } w-full border-2 px-3 py-2 border-stone-200 rounded-lg cursor-pointer hover:bg-blue-50`}
+          >
+            All Doctors
+          </Link>
+          <Link
+            to="/doctor/General physician"
+            className={`${
+              speciality === "General physician"
+                ? "bg-indigo-100 hover:bg-indigo-100 text-black"
+                : ""
+            } w-full border-2 px-3 py-2 border-stone-200 rounded-lg cursor-pointer hover:bg-blue-50`}
+          >
+            General Physician
+          </Link>
+          <Link
+            to="/doctor/Gynecologist"
+            className={`${
+              speciality === "Gynecologist"
+                ? "bg-indigo-100 hover:bg-indigo-100 text-black"
+                : ""
+            } w-full border-2 px-3 py-2 border-stone-200 rounded-lg cursor-pointer hover:bg-blue-50`}
+          >
+            Gynecologist
+          </Link>
+          <Link
+            to="/doctor/Dermatologist"
+            className={`${
+              speciality === "Dermatologist"
+                ? "bg-indigo-100 hover:bg-indigo-100 text-black"
+                : ""
+            } w-full border-2 px-3 py-2 border-stone-200 rounded-lg cursor-pointer hover:bg-blue-50`}
+          >
+            Dermatologist
+          </Link>
+          <Link
+            to="/doctor/Pediatricians"
+            className={`${
+              speciality === "Pediatricians"
+                ? "bg-indigo-100 hover:bg-indigo-100 text-black"
+                : ""
+            } w-full border-2 px-3 py-2 border-stone-200 rounded-lg cursor-pointer hover:bg-blue-50`}
+          >
+            Pediatricians
+          </Link>
+          <Link
+            to="/doctor/Neurologist"
+            className={`${
+              speciality === "Neurologist"
+                ? "bg-indigo-100 hover:bg-indigo-100 text-black"
+                : ""
+            } w-full border-2 px-3 py-2 border-stone-200 rounded-lg cursor-pointer hover:bg-blue-50`}
+          >
+            Neurologist
+          </Link>
+          <Link
+            to="/doctor/Gastroenterologist"
+            className={`${
+              speciality === "Gastroenterologist"
+                ? "bg-indigo-100 hover:bg-indigo-100 text-black"
+                : ""
+            } w-full border-2 px-3 py-2 border-stone-200 rounded-lg cursor-pointer hover:bg-blue-50`}
+          >
+            Gastroenterologist
+          </Link>
+        </div>
+
         <div className=" w-full max-h-[80vh] overflow-x-scroll grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 ">
           {filterDoc.map((item, index) => (
             <Link
