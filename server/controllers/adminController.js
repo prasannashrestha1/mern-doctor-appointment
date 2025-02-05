@@ -92,7 +92,7 @@ const adminLogin = async (req, res) => {
       const token = jwt.sign(email + password, process.env.JWT_SECRET);
       res.status(200).json({
         success: true,
-        message: token,
+        token,
       });
     } else {
       res.status(400).json({
