@@ -11,10 +11,12 @@ import About from "./pages/About";
 import Footer from "./components/Footer";
 import Contact from "./pages/Contact";
 import MyProfile from "./pages/MyProfile";
+import { ToastContainer } from "react-toastify";
 
 const App = () => {
   return (
     <div className=" mx-4 sm:mx-8">
+      <ToastContainer />
       <div className="flex flex-col gap-10 max-w-[1440px] mx-auto w-full">
         <Navbar />
         <Routes>

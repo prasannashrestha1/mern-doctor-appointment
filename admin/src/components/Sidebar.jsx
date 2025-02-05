@@ -6,7 +6,7 @@ import { AdminContext } from "../context/AdminContext";
 const Sidebar = () => {
   const { aToken } = useContext(AdminContext);
   return (
-    <div className="py-4 flex flex-col gap-3 border-r-2 grow border-[#bec0c3] h-full min-w-20 max-w-20 lg:max-w-[250px]">
+    <div className="py-4 flex flex-col gap-3 border-r-2 grow border-[#bec0c3] h-full min-w-20 lg:min-w-[250px] max-w-20 lg:max-w-[250px]">
       <NavLink
         to="/admin-dashboard"
         className={({ isActive }) =>

@@ -77,15 +77,11 @@ const Appointment = () => {
     getAvailableSlots();
   }, []);
 
-  useEffect(() => {
-    console.log(docSlot);
-  }, [docSlot]);
-
   return docBio ? (
     <div className="flex flex-col gap-20">
       <div className="flex flex-col items-end gap-10 text-slate-700">
-        <div className="flex flex-col lg:flex-row gap-4">
-          <div className="bg-primary sm:min-w-[350px] flex items-end justify-center rounded-xl">
+        <div className="flex flex-col w-full lg:flex-row gap-4">
+          <div className="bg-primary sm:max-w-[450px] flex items-end justify-center rounded-xl">
             <img src={docBio.image} className="" />
           </div>
           <div className="flex flex-col gap-5 px-8 py-12 border grow border-slate-400 rounded-xl">
