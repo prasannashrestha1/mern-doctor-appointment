@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { assets } from "./../assets/assets";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FaAngleDown } from "react-icons/fa";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoClose } from "react-icons/io5";
+import { AppContext } from "../context/AppContext";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [showMenu, setshowMenu] = useState(false);
-  const [token, setToken] = useState(true);
-
+  const { token, setToken, userData } = useContext(AppContext);
   return (
     <div className="w-full sticky top-0 bg-white z-10">
       <div className=" flex justify-between items-center max-w-[1440px] border-b text-sm md:text-md border-b-gray-400 p-4 mx-auto">
@@ -40,8 +40,8 @@ const Navbar = () => {
           {token ? (
             <div className="flex gap-2 items-center justify-center cursor-pointer group relative">
               <img
-                src={assets.profile_pic}
-                className="w-[40px] rounded-full"
+                src={userData.image}
+                className="w-[40px] h-[40px]  rounded-full"
                 alt="profile"
               />
               <FaAngleDown />
@@ -61,7 +61,10 @@ const Navbar = () => {
                     My Appointments
                   </p>
                   <p
-                    onClick={() => setToken(false)}
+                    onClick={() => {
+                      setToken("");
+                      localStorage.removeItem("token");
+                    }}
                     className="hover:text-black cursor-pointer py-1 px-2 rounded-lg hover:bg-stone-200"
                   >
                     Logout
@@ -72,7 +75,7 @@ const Navbar = () => {
           ) : (
             <button
               onClick={() => navigate("/signin")}
-              className=" px-4 py-2 md:px-6 md:py-3  font-semibold bg-[#5F6FFF] text-white rounded-full"
+              className=" px-4 py-2 md:px-6 md:py-3 cursor-pointer hover:shadow-sm hover:scale-101 transition-all duration-300 font-semibold bg-[#5F6FFF] text-white rounded-full"
             >
               Create Account
             </button>

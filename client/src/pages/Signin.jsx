@@ -1,10 +1,64 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import axios from "axios";
+import { AppContext } from "../context/AppContext";
+import { useNavigate } from "react-router-dom";
 
 const Signin = () => {
+  const { token, setToken } = useContext(AppContext);
   const [signup, setSignUp] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      if (signup) {
+        if (!email || !password || !name) {
+          return toast.error("Please fill in all Credentials");
+        }
+        const { data } = await axios.post("/api/user/signup", {
+          name,
+          password,
+          email,
+        });
+
+        if (data.success) {
+          localStorage.setItem("token", data.token);
+          setToken(data.token);
+          navigate("/");
+        } else {
+          toast.error("Something went wrong");
+        }
+      } else {
+        if (!email || !password) {
+          return toast.error("Please fill in all Credentials");
+        }
+
+        const { data } = await axios.post("/api/user/login", {
+          password,
+          email,
+        });
+
+        if (data.success) {
+          localStorage.setItem("token", data.token);
+          setToken(data.token);
+          navigate("/");
+        }
+      }
+    } catch (error) {
+      console.log(error.message);
+      toast.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    if (token) {
+      navigate("/");
+    }
+  }, [token]);
 
   return (
     <div className="w-full h-[80vh] flex items-center justify-center">
@@ -17,7 +71,7 @@ const Signin = () => {
               : "Please login to book appointment"}{" "}
           </p>
         </div>
-        <form className="flex flex-col gap-3">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-3">
           {signup && (
             <div className="flex flex-col gap-2">
               <label>Full Name</label>
@@ -54,9 +108,12 @@ const Signin = () => {
               required
             />
           </div>
-          <div className="bg-primary hover:bg-blue-700 px-4 py-2 text-white rounded-lg w-full cursor-pointer text-center">
+          <button
+            type="submit"
+            className="bg-primary hover:bg-blue-700 px-4 py-2 text-white rounded-lg w-full cursor-pointer text-center"
+          >
             {signup ? "Create Account" : "Login"}
-          </div>
+          </button>
         </form>
         <p>
           {signup ? "Already have an account?" : "Don't have an account?"}{" "}

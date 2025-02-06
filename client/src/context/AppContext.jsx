@@ -8,10 +8,11 @@ export const AppContext = createContext();
 const AppContextProvider = (props) => {
   const currencySymbol = "$";
   const [doctors, setDoctors] = useState([]);
-  const value = {
-    doctors,
-    currencySymbol,
-  };
+  const [token, setToken] = useState(
+    localStorage.getItem("token") ? localStorage.getItem("token") : ""
+  );
+  const [userData, setUserData] = useState({});
+
   const getDoctorsData = async () => {
     try {
       const { data } = await axios.get("/api/doctor/list");
@@ -23,11 +24,43 @@ const AppContextProvider = (props) => {
     }
   };
 
+  const getCurrentUser = async () => {
+    try {
+      const { data } = await axios.get("/api/user/get-profile", {
+        headers: {
+          token,
+        },
+      });
+      if (data.success) {
+        setUserData(data.user);
+      } else {
+        toast.error("Something went wrong");
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  const value = {
+    doctors,
+    currencySymbol,
+    token,
+    setToken,
+    userData,
+    setUserData,
+    getCurrentUser,
+  };
   useEffect(() => {
     getDoctorsData();
   }, []);
 
-  console.log(doctors);
+  useEffect(() => {
+    if (token) {
+      getCurrentUser();
+    } else {
+      setUserData(false);
+    }
+  }, [token]);
 
   return (
     <AppContext.Provider value={value}>{props.children}</AppContext.Provider>

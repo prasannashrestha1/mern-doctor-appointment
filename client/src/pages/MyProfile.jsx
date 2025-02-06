@@ -1,36 +1,96 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { assets } from "../assets/assets";
+import { AppContext } from "../context/AppContext";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const MyProfile = () => {
   const fileInputRef = useRef();
-  const [userData, setUserData] = useState({
-    image: assets.profile_pic,
-    name: "Prasanna Shrestha",
-    email: "shresthaprasanna230@gmail.com",
-    phone: "977-9860270060",
-    address: "sitapaila",
-
-    gender: "Male",
-    dob: "2001-10-13",
-  });
+  const { userData, setUserData, getCurrentUser, token } =
+    useContext(AppContext);
   const [image, setImage] = useState();
   const [edit, setEdit] = useState(false);
-  useEffect(() => {
-    setImage(assets.about_image);
-  }, []);
+  useEffect(() => {}, []);
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setImage(imageUrl);
+    }
+  };
 
+  const updateUser = async () => {
+    try {
+      if (
+        !userData.name ||
+        !userData.phone ||
+        !userData.dob ||
+        !userData.gender ||
+        !userData.address
+      ) {
+        toast.error("Fill in all mandatory Credentials");
+        return;
+      }
+      const formData = new FormData();
+      formData.append("name", userData.name);
+      formData.append("phone", userData.phone);
+      formData.append("dob", userData.dob);
+      formData.append("gender", userData.gender);
+      formData.append("address", userData.address);
+
+      image && formData.append("image", image);
+      console.log(image);
+      const { data } = await axios.post("/api/user/update-profile", formData, {
+        headers: {
+          token,
+        },
+      });
+      if (data.success) {
+        toast.success(data.message);
+        await getCurrentUser();
+      } else {
+        toast.error(data.message);
+      }
+      setEdit(false);
+      setImage(false);
+    } catch (error) {
+      console.log(error.message);
+      toast.error(error.message);
+      setEdit(false);
+    }
+  };
+
+  console.log(userData);
   return (
     <div className="h-screen text-slate-500">
       <div className="flex flex-col gap-8">
         <div className="flex flex-col gap-4 text-3xl text-slate-700 pb-3 border-b-2 border-b-slate-400">
-          <div className="flex gap-4">
-            <img
-              onClick={() => fileInputRef.current.click()}
-              src={userData.image}
-              className="max-w-[160px] rounded-lg cursor-pointer"
-            />
-            <input type="file" hidden accept="image/*" ref={fileInputRef} />
-          </div>
+          {edit ? (
+            <div className="flex gap-4">
+              <img
+                onClick={() => fileInputRef.current.click()}
+                src={image || userData.image} // Fallback image
+                alt="Uploaded Preview"
+                className="max-w-[160px] rounded-lg "
+              />
+              <input
+                type="file"
+                hidden
+                accept="image/*"
+                onChange={handleFileChange}
+                ref={fileInputRef}
+                disabled
+              />
+            </div>
+          ) : (
+            <div className="flex gap-4">
+              <img
+                src={userData.image} // Fallback image
+                className="max-w-[160px] rounded-lg"
+              />
+            </div>
+          )}
+
           {edit ? (
             <input
               type="text"
@@ -48,18 +108,7 @@ const MyProfile = () => {
           <p className="font-bold text-lg">CONTACT INFORMATION</p>
           <div className="flex">
             <p className="min-w-25 font-semibold">Email:</p>
-            {edit ? (
-              <input
-                type="text"
-                className="profile-inpt"
-                value={userData.email}
-                onChange={(e) =>
-                  setUserData((prev) => ({ ...prev, email: e.target.value }))
-                }
-              ></input>
-            ) : (
-              <p>{userData.email}</p>
-            )}
+            <p>{userData.email}</p>
           </div>
           <div className="flex">
             <p type="text" className="min-w-25 font-semibold">
@@ -93,7 +142,7 @@ const MyProfile = () => {
                 }
               ></input>
             ) : (
-              <p>{userData.address}</p>
+              <p>{userData.address ? userData.address : "Address not added"}</p>
             )}
           </div>
         </div>
@@ -137,12 +186,12 @@ const MyProfile = () => {
                 }
               ></input>
             ) : (
-              <p>{userData.dob}</p>
+              <p>{userData.dob ? userData.dob : "Birthday not added"}</p>
             )}
           </div>
         </div>
         <button
-          onClick={() => setEdit(!edit)}
+          onClick={() => (edit ? updateUser() : setEdit(true))}
           className=" hover:text-white hover:bg-primary cursor-pointer px-8 py-2 border border-slate-300 rounded-2xl w-fit"
         >
           {edit ? "Save" : "Edit"}
