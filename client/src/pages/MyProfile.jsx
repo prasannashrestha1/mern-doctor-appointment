@@ -40,11 +40,15 @@ const MyProfile = () => {
 
       image && formData.append("image", image);
       console.log(image);
-      const { data } = await axios.post("/api/user/update-profile", formData, {
-        headers: {
-          token,
-        },
-      });
+      const { data } = await axios.post(
+        "/api/user/book-appointment",
+        formData,
+        {
+          headers: {
+            token,
+          },
+        }
+      );
       if (data.success) {
         toast.success(data.message);
         await getCurrentUser();

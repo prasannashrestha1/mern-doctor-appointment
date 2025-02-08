@@ -4,6 +4,8 @@ import { AppContext } from "../context/AppContext";
 import { assets } from "../assets/assets";
 import DocCard from "./../components/DocCard";
 import RelatedDoctors from "../components/RelatedDoctors";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const Appointment = () => {
   const [docBio, setDocBio] = useState({});
@@ -13,8 +15,45 @@ const Appointment = () => {
   const daysOfWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
   const { docId } = useParams();
-  const { doctors, currencySymbol } = useContext(AppContext);
+  const { doctors, currencySymbol, token, getDoctorsData, userData } =
+    useContext(AppContext);
   const navigate = useNavigate();
+
+  const bookAppointment = async () => {
+    if (!token) {
+      toast.warn("User is not logged in. Please login to continue booking");
+      return navigate("/signin");
+    }
+    try {
+      const date = docSlot[slotIndex][0].datetime;
+
+      let day = date.getDate();
+      let month = date.getMonth() + 1;
+      let year = date.getFullYear();
+
+      const slotDate = day + "_" + month + "_" + year;
+
+      const { data } = await axios.post(
+        "/api/user/book-appointment",
+        { slotTime, docId, slotDate },
+        {
+          headers: {
+            token,
+          },
+        }
+      );
+      if (data.success) {
+        toast.success(data.message);
+        getDoctorsData();
+        navigate("/my-appointments");
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+      console.log(error.message);
+    }
+  };
 
   const doctorDescription = () => {
     setDocBio(doctors.filter((doc) => doc._id === docId)[0]);
@@ -55,11 +94,26 @@ const Appointment = () => {
           minute: "2-digit",
         });
 
-        //add slot to array
-        timeSlots.push({
-          datetime: new Date(currentDate),
-          time: formattedTime,
-        });
+        let day = currentDate.getDate();
+        let month = currentDate.getMonth() + 1;
+        let year = currentDate.getFullYear();
+
+        const slotDate = day + "_" + month + "_" + year;
+        const slotTime = formattedTime;
+
+        const isSlotAvailable =
+          docBio.slots_booked[slotDate] &&
+          docBio.slots_booked[slotDate].includes(slotTime)
+            ? false
+            : true;
+
+        if (isSlotAvailable) {
+          //add slot to array
+          timeSlots.push({
+            datetime: new Date(currentDate),
+            time: formattedTime,
+          });
+        }
 
         //increament current time by 30 min
         currentDate.setMinutes(currentDate.getMinutes() + 30);
@@ -156,7 +210,10 @@ const Appointment = () => {
               <div>No available slots</div>
             )}
           </div>
-          <button className="bg-primary hover:bg-blue-700 text-white rounded-4xl p-4 text-center max-w-[400px] cursor-pointer">
+          <button
+            onClick={bookAppointment}
+            className="bg-primary hover:bg-blue-700 text-white rounded-4xl p-4 text-center max-w-[400px] cursor-pointer"
+          >
             Book an Appointment
           </button>
         </div>

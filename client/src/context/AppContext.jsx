@@ -12,6 +12,7 @@ const AppContextProvider = (props) => {
     localStorage.getItem("token") ? localStorage.getItem("token") : ""
   );
   const [userData, setUserData] = useState({});
+  const [allAppointments, setAllAppointments] = useState([]);
 
   const getDoctorsData = async () => {
     try {
@@ -41,6 +42,23 @@ const AppContextProvider = (props) => {
     }
   };
 
+  const retrieveAppointments = async () => {
+    try {
+      const { data } = await axios.get("/api/user/list-appointment", {
+        headers: {
+          token,
+        },
+      });
+      if (data.success) {
+        setAllAppointments(data.allAppointments.reverse());
+      } else {
+        toast.error("Couldn't fetch appointments");
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
   const value = {
     doctors,
     currencySymbol,
@@ -49,6 +67,9 @@ const AppContextProvider = (props) => {
     userData,
     setUserData,
     getCurrentUser,
+    getDoctorsData,
+    allAppointments,
+    retrieveAppointments,
   };
   useEffect(() => {
     getDoctorsData();
@@ -57,11 +78,13 @@ const AppContextProvider = (props) => {
   useEffect(() => {
     if (token) {
       getCurrentUser();
+      retrieveAppointments();
     } else {
       setUserData(false);
     }
   }, [token]);
 
+  console.log(doctors);
   return (
     <AppContext.Provider value={value}>{props.children}</AppContext.Provider>
   );
