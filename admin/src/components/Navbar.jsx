@@ -2,17 +2,17 @@ import React, { useContext } from "react";
 import { assets } from "./../assets/assets";
 import { AdminContext } from "../context/AdminContext";
 import { useNavigate } from "react-router-dom";
+import { AppContext } from "../context/AppContext";
 
 const Navbar = () => {
   const { aToken, setAToken } = useContext(AdminContext);
-  const { dToken, setDToken } = useContext(AdminContext);
+  const { dToken, setDToken } = useContext(AppContext);
   const navigate = useNavigate();
   const Logout = () => {
     aToken && localStorage.clear("atoken");
     aToken && setAToken("");
     dToken && localStorage.clear("dtoken");
     dToken && setDToken("");
-    navigate("/login");
   };
   return (
     <div className="px-10 py-5 flex justify-between items-center border border-[#bec0c3]">

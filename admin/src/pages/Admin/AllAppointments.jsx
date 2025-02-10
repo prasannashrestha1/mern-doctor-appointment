@@ -13,9 +13,7 @@ const AllAppointments = () => {
     if (aToken) {
       fetchAppoitnments();
     }
-  }, [aToken, allAppointment]);
-
-  console.log(allAppointment);
+  }, [aToken]);
 
   return (
     <div className="flex flex-col gap-6 ">
@@ -75,7 +73,7 @@ const AllAppointments = () => {
                 ) : (
                   <div
                     onClick={() => cancelAppointment(item._id)}
-                    className="py-3 px-1 w-[30px] rounded-full h-[30px] flex items-center justify-center  bg-red-100  mr-3"
+                    className="py-3 px-1 w-[30px] rounded-full h-[30px] flex items-center justify-center hover:shadow hover:scale-101 bg-red-100  mr-3"
                   >
                     <RiDeleteBin6Line
                       color="red"

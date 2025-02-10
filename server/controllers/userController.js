@@ -223,6 +223,7 @@ export const listAppointment = async (req, res) => {
 export const cancelAppointment = async (req, res) => {
   try {
     const { userId, appointmentId } = req.body;
+    console.log(userId, appointmentId);
     const appointmentData = await appointmentModel.findById(appointmentId);
     //verify appointment user
     if (appointmentData.userId !== userId) {
@@ -248,6 +249,7 @@ export const cancelAppointment = async (req, res) => {
       success: true,
       message: "Appointment Cancelled",
     });
+    console.log("cancelled");
   } catch (error) {
     res.status(500).json({
       success: false,

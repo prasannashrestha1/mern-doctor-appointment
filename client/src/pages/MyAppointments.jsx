@@ -4,7 +4,8 @@ import { toast } from "react-toastify";
 import axios from "axios";
 
 const MyAppointments = () => {
-  const { allAppointments, retrieveAppointments } = useContext(AppContext);
+  const { allAppointments, retrieveAppointments, token } =
+    useContext(AppContext);
   const months = [
     "",
     "Jan",
@@ -34,6 +35,7 @@ const MyAppointments = () => {
         { appointmentId },
         { headers: { token } }
       );
+      console.log(data);
       if (data.success) {
         toast.success(data.message);
         retrieveAppointments();
@@ -81,7 +83,9 @@ const MyAppointments = () => {
               <div className="flex flex-col justify-end gap-4 ">
                 <button className="btn bg-blue-500 text-white">Pay</button>
                 <button
-                  onClick={() => cancelAppointment(item._id)}
+                  onClick={() => {
+                    cancelAppointment(item._id);
+                  }}
                   className=" btn-failure "
                 >
                   Cancel Appointment
