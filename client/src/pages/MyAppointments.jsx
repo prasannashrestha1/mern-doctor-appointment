@@ -48,7 +48,7 @@ const MyAppointments = () => {
   };
 
   return (
-    <div className="pt-2 min-h-screen">
+    <div className="pt-2 min-h-[80vh]">
       <h2 className="text-2xl font-semibold mb-5 pb-5 border-b border-gray-400">
         My Appointments
       </h2>
