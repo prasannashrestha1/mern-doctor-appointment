@@ -4,6 +4,7 @@ import { v2 as cloudinary } from "cloudinary";
 import doctorModel from "../modals/doctorModel.js";
 import jwt from "jsonwebtoken";
 import appointmentModel from "../modals/appointmentModel.js";
+import userModal from "./../modals/userModel.js";
 
 const addDoctor = async (req, res, next) => {
   try {
@@ -32,17 +33,13 @@ const addDoctor = async (req, res, next) => {
       !address ||
       !imageFile
     ) {
-      return res
-        .status(400)
-        .json({ success: false, message: "all fields are necessary" });
+      return res.json({ success: false, message: "all fields are necessary" });
     }
     if (!validator.isEmail(email)) {
-      return res
-        .status(400)
-        .json({ success: false, message: " Please input valid email" });
+      return res.json({ success: false, message: " Please input valid email" });
     }
     if (password.length < 7) {
-      return res.status(400).json({
+      return res.json({
         success: false,
         message: "Password length should be greater than 7",
       });
@@ -96,7 +93,7 @@ const adminLogin = async (req, res) => {
         token,
       });
     } else {
-      res.status(400).json({
+      res.json({
         success: false,
         message: "invalid credentials",
       });
@@ -192,10 +189,37 @@ const appointmentCancel = async (req, res) => {
   }
 };
 
+//dashboard data
+const adminDashboard = async (req, res) => {
+  try {
+    const doctors = await doctorModel.find({});
+    const users = await userModal.find({});
+    const appointments = await appointmentModel.find({});
+
+    const dashData = {
+      doctors: doctors.length,
+      appointments: appointments.length,
+      patients: users.length,
+      latestAppointments: appointments.reverse().slice(0, 6),
+    };
+    res.json({
+      success: true,
+      dashData,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+      error: error.message,
+    });
+  }
+};
+
 export {
   addDoctor,
   adminLogin,
   fetchDoctors,
   appointmentsAdmin,
   appointmentCancel,
+  adminDashboard,
 };

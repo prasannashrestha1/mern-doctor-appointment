@@ -77,7 +77,7 @@ const AddDoctor = () => {
         className="flex flex-col sm:p-8 gap-4 rounded sm:border border-slate-300"
       >
         {/* image header  */}
-        <div className="flex bg-red-200 items-center gap-4">
+        <div className="flex  items-center gap-4">
           <label htmlFor="doc-img">
             <img
               src={image ? URL.createObjectURL(image) : assets.upload_area}
