@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import { v2 as cloudinary } from "cloudinary";
 import doctorModel from "../modals/doctorModel.js";
 import jwt from "jsonwebtoken";
+import appointmentModel from "../modals/appointmentModel.js";
 
 const addDoctor = async (req, res, next) => {
   try {
@@ -126,4 +127,75 @@ const fetchDoctors = async (req, res) => {
   }
 };
 
-export { addDoctor, adminLogin, fetchDoctors };
+//api to get all appointments list
+const appointmentsAdmin = async (req, res) => {
+  try {
+    const allAppointments = await appointmentModel.find({});
+    res.json({
+      success: true,
+      allAppointments,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+// api to cancel an appointment
+const appointmentCancel = async (req, res) => {
+  try {
+    const { appointmentId } = req.body;
+    const appointmentData = await appointmentModel.findById(appointmentId);
+    if (!appointmentData) {
+      return res.json({
+        success: false,
+        message: "Appointment not found",
+      });
+    }
+
+    const model = await appointmentModel.findByIdAndUpdate(appointmentId, {
+      cancelled: true,
+    });
+
+    // Releasing doctor slot
+    const { slotDate, slotTime, docId } = appointmentData;
+    const doctorData = await doctorModel.findById(docId);
+
+    if (!doctorData) {
+      return res.status(404).json({
+        success: false,
+        message: "Doctor not found",
+      });
+    }
+
+    let slots_booked = doctorData.slots_booked || {}; // Ensure it's an object
+    if (slots_booked[slotDate]) {
+      slots_booked[slotDate] = slots_booked[slotDate].filter(
+        (e) => e !== slotTime
+      );
+    }
+
+    await doctorModel.findByIdAndUpdate(docId, { slots_booked });
+
+    return res.json({
+      success: true,
+      message: "Appointment Cancelled",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+      error: error.message,
+    });
+  }
+};
+
+export {
+  addDoctor,
+  adminLogin,
+  fetchDoctors,
+  appointmentsAdmin,
+  appointmentCancel,
+};

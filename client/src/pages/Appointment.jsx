@@ -15,14 +15,24 @@ const Appointment = () => {
   const daysOfWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
   const { docId } = useParams();
-  const { doctors, currencySymbol, token, getDoctorsData, userData } =
-    useContext(AppContext);
+  const {
+    doctors,
+    currencySymbol,
+    token,
+    getDoctorsData,
+    userData,
+    retrieveAppointments,
+  } = useContext(AppContext);
   const navigate = useNavigate();
 
   const bookAppointment = async () => {
     if (!token) {
       toast.warn("User is not logged in. Please login to continue booking");
       return navigate("/signin");
+    }
+    if (!slotIndex || !slotTime) {
+      toast.warn("Please select both slot time and date");
+      return;
     }
     try {
       const date = docSlot[slotIndex][0].datetime;
@@ -45,6 +55,9 @@ const Appointment = () => {
       if (data.success) {
         toast.success(data.message);
         getDoctorsData();
+        setSlotIndex(0);
+        retrieveAppointments();
+
         navigate("/my-appointments");
       } else {
         toast.error(data.message);
@@ -102,10 +115,11 @@ const Appointment = () => {
         const slotTime = formattedTime;
 
         const isSlotAvailable =
-          docBio.slots_booked[slotDate] &&
+          docBio.slots_booked &&
+          (docBio.slots_booked[slotDate] &&
           docBio.slots_booked[slotDate].includes(slotTime)
             ? false
-            : true;
+            : true);
 
         if (isSlotAvailable) {
           //add slot to array
@@ -128,8 +142,10 @@ const Appointment = () => {
   }, [docId, doctors]);
 
   useEffect(() => {
-    getAvailableSlots();
-  }, []);
+    if (docBio) {
+      getAvailableSlots();
+    }
+  }, [docBio]);
 
   return docBio ? (
     <div className="flex flex-col gap-20">

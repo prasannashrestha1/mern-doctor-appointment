@@ -4,7 +4,6 @@ import jwt from "jsonwebtoken";
 import { v2 as cloudinary } from "cloudinary";
 import appointmentModel from "../modals/appointmentModel.js";
 import doctorModel from "../modals/doctorModel.js";
-
 //user signup
 
 export const signup = async (req, res) => {
@@ -47,21 +46,21 @@ export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
-      return res.status(400).json({
+      return res.json({
         success: false,
         message: "Email and password should not be empty",
       });
     }
     const validUser = await userModal.findOne({ email });
     if (!validUser) {
-      return res.status(404).json({
+      return res.json({
         success: false,
         message: "User not found",
       });
     }
     const comparePassword = await bcrypt.compare(password, validUser.password);
     if (!comparePassword) {
-      return res.status(401).json({
+      return res.json({
         success: false,
         message: "Email or Password is incorrect",
       });
@@ -126,7 +125,6 @@ export const updateUser = async (req, res) => {
       await userModal.findByIdAndUpdate(userId, {
         image: imageUrl,
       });
-      console.log(imageUrl);
     }
 
     res.status(200).json({
@@ -148,7 +146,6 @@ export const bookAppointment = async (req, res) => {
     const { userId, docId, slotDate, slotTime } = req.body;
 
     const doctor = await doctorModel.findById(docId).select("-password");
-    console.log(docId);
     if (!doctor.available) {
       return res.json({
         success: false,
@@ -170,7 +167,6 @@ export const bookAppointment = async (req, res) => {
       slots_booked[slotDate] = [];
       slots_booked[slotDate].push(slotTime);
     }
-    console.log(doctor);
 
     const user = await userModal.findById(userId).select("-password");
 
@@ -200,7 +196,6 @@ export const bookAppointment = async (req, res) => {
       message: "Internal Server Error",
       error: error.message,
     });
-    console.log(error);
   }
 };
 
@@ -229,7 +224,6 @@ export const cancelAppointment = async (req, res) => {
   try {
     const { userId, appointmentId } = req.body;
     const appointmentData = await appointmentModel.findById(appointmentId);
-
     //verify appointment user
     if (appointmentData.userId !== userId) {
       return res.json({
@@ -262,3 +256,5 @@ export const cancelAppointment = async (req, res) => {
     });
   }
 };
+
+//api to make payment of appointment us

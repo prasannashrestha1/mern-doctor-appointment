@@ -4,8 +4,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 
 const MyAppointments = () => {
-  const { doctors, allAppointments, retrieveAppointments } =
-    useContext(AppContext);
+  const { allAppointments, retrieveAppointments } = useContext(AppContext);
   const months = [
     "",
     "Jan",
@@ -33,21 +32,18 @@ const MyAppointments = () => {
       const { data } = await axios.post(
         "/api/user/cancel-appointment",
         { appointmentId },
-        {
-          headers: {
-            token,
-          },
-        }
+        { headers: { token } }
       );
       if (data.success) {
-        toast.success(data.messsage);
+        toast.success(data.message);
         retrieveAppointments();
+        console.log("done");
       } else {
-        toast.success(data.messsage);
+        toast.error(data.message);
+        console.log("error");
       }
     } catch (error) {
       toast.error(error.messsage);
-      console.log(error.messsage);
     }
   };
 
@@ -56,7 +52,7 @@ const MyAppointments = () => {
       <h2 className="text-2xl font-semibold mb-5 pb-5 border-b border-gray-400">
         My Appointments
       </h2>
-      <div className="grid grid-cols-1 gap-4 pt-5">
+      <div className="grid grid-cols-1 gap-4 pt-5 max-h-[75vh] overflow-y-auto">
         {allAppointments.map((item, index) => (
           <div
             key={index}
@@ -81,15 +77,23 @@ const MyAppointments = () => {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col justify-end gap-4 ">
-              <button className="btn bg-blue-500 text-white">Pay</button>
-              <button
-                onClick={() => cancelAppointment(item._id)}
-                className=" btn-failure "
-              >
-                Cancel Appointment
-              </button>
-            </div>
+            {!item.cancelled ? (
+              <div className="flex flex-col justify-end gap-4 ">
+                <button className="btn bg-blue-500 text-white">Pay</button>
+                <button
+                  onClick={() => cancelAppointment(item._id)}
+                  className=" btn-failure "
+                >
+                  Cancel Appointment
+                </button>
+              </div>
+            ) : (
+              <div className="flex flex-col justify-end gap-4 ">
+                <button className=" text-red-500 ">
+                  Appointment cancelled
+                </button>
+              </div>
+            )}
           </div>
         ))}
       </div>
