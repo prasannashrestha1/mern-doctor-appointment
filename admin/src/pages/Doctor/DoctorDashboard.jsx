@@ -23,7 +23,6 @@ const DoctorDashboard = () => {
       getDashData();
     }
   }, [dToken]);
-  console.log(dashData);
 
   return (
     dashData && (
@@ -56,6 +55,11 @@ const DoctorDashboard = () => {
             <img src={assets.list_icon} className="w-5 h-5" />
             <h2 className="text-lg sm:text-xl">Latest Appointment</h2>
           </div>
+          {dashData.latestAppointments.length === 0 && (
+            <div className="min-h-40 flex justify-center items-center text-slate-600 text-xl">
+              No Appointments Available
+            </div>
+          )}
           {dashData.latestAppointments &&
             dashData.latestAppointments.map((item, index) => (
               <div key={index} className="px-8 py-4 hover:bg-primary/5">
@@ -72,13 +76,17 @@ const DoctorDashboard = () => {
                     </p>
                   </div>
                   {item.cancelled ? (
-                    <p className=" text-red-500 text-xs font-medium">
-                      Cancelled
-                    </p>
+                    <div className="px-4 py-2 rounded-full  bg-red-100">
+                      <p className=" text-red-500 text-xs font-medium">
+                        Cancelled
+                      </p>
+                    </div>
                   ) : item.isCompleted ? (
-                    <p className=" text-green-500 text-xs font-medium">
-                      Completed
-                    </p>
+                    <div className="px-4 py-2 rounded-full  bg-green-100">
+                      <p className=" text-green-500 text-xs font-medium">
+                        Completed
+                      </p>
+                    </div>
                   ) : (
                     <div className="flex gap-1">
                       <div

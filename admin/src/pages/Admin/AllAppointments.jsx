@@ -31,7 +31,7 @@ const AllAppointments = () => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col w-full  bg-white max-w-7xl rounded-xl border border-gray-300 ">
+      <div className="flex flex-col w-full  bg-white max-w-7xl rounded-xl border border-gray-300 shadow-xl">
         <header className="flex text-center grow justify-between border-b-1 border-gray-300  ">
           <p className="w-[3%] py-3 px-1 ">#</p>
           <p className="w-[20%] py-3 px-1">Patient</p>
@@ -40,9 +40,14 @@ const AllAppointments = () => {
           <p className="w-[20%] py-3 px-1">Date & Time</p>
           <p className="w-[20%] py-3 px-1">Doctor</p>
           <p className="w-[10%] py-3 px-1">Fees</p>
-          <p className="py-3 px-1 w-[30px] rounded-full h-[30px] flex items-center justify-center cursor-pointer mr-3"></p>
+          <p className="min-w-[90px]"></p>
         </header>
         <div className="">
+          {allAppointment.length === 0 && (
+            <div className="min-h-40 flex justify-center items-center text-slate-600 text-xl">
+              No Appointments Available
+            </div>
+          )}
           {allAppointment &&
             allAppointment.map((item, index) => (
               <div
@@ -63,14 +68,14 @@ const AllAppointments = () => {
                   {currency}
                   {item.docData.fees}
                 </p>
-                {item.cancelled ? (
+                {/* {item.cancelled ? (
                   <div className="py-3 px-1 w-[30px] rounded-full h-[30px] flex items-center justify-center hover:shadow hover:scale-101 bg-primary/10 cursor-pointer mr-3">
                     <MdFreeCancellation
                       color=""
                       className="mx-auto h-[16px] w-[16px]"
                     />
                   </div>
-                ) : (
+                ) : item.isCompleted ? (
                   <div
                     onClick={() => cancelAppointment(item._id)}
                     className="py-3 px-1 w-[30px] rounded-full h-[30px] flex items-center justify-center hover:shadow hover:scale-101 bg-red-100  mr-3"
@@ -80,7 +85,34 @@ const AllAppointments = () => {
                       className="mx-auto h-[16px] w-[16px]"
                     />
                   </div>
-                )}
+                ) : (
+                  ""
+                )} */}
+                <div className="min-w-[90px] flex justify-center">
+                  {item.cancelled ? (
+                    <div className="px-4 py-2 rounded-full  bg-red-100">
+                      <p className=" text-red-500 text-xs font-medium">
+                        Cancelled
+                      </p>
+                    </div>
+                  ) : item.isCompleted ? (
+                    <div className="px-4 py-2 rounded-full  bg-green-100">
+                      <p className=" text-green-500 text-xs font-medium">
+                        Completed
+                      </p>
+                    </div>
+                  ) : (
+                    <div
+                      onClick={() => cancelAppointment(item._id)}
+                      className="py-3 px-1 w-[30px] cursor-pointer rounded-full h-[30px] flex items-center justify-center hover:shadow hover:scale-101 bg-red-100  mr-3"
+                    >
+                      <RiDeleteBin6Line
+                        color="red"
+                        className="mx-auto h-[16px] w-[16px]"
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
             ))}
         </div>

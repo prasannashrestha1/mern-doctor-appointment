@@ -10,8 +10,12 @@ const Login = () => {
 
   // if state = true is admin and statle = false is doctor
   const [state, setState] = useState(true);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState(
+    state ? import.meta.env.VITE_ADMIN_EMAIL || "" : ""
+  );
+  const [password, setPassword] = useState(
+    state ? import.meta.env.VITE_ADMIN_PASSWORD || "" : ""
+  );
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     try {
@@ -31,7 +35,6 @@ const Login = () => {
           email,
           password,
         });
-        console.log(data);
         if (data.success) {
           localStorage.setItem("dtoken", data.token);
           setDToken(data.token);

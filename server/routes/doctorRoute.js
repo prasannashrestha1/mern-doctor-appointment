@@ -7,7 +7,9 @@ import {
   appointmentsDoctor,
   doctorDashboard,
   doctorList,
+  doctorProfile,
   loginDoctor,
+  updateDoctor,
 } from "../controllers/doctorController.js";
 
 const router = express.Router();
@@ -18,5 +20,7 @@ router.get("/doctor-appointments", authDoctor, appointmentsDoctor);
 router.post("/complete-appointment", authDoctor, appointmentComplete);
 router.post("/cancel-appointment", authDoctor, appointmentCancel);
 router.get("/dashboard", authDoctor, doctorDashboard);
+router.get("/profile", authDoctor, doctorProfile);
+router.post("/update-profile", authDoctor, updateDoctor);
 
 export default router;

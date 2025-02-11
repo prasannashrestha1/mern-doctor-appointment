@@ -26,6 +26,7 @@ const TopDoctors = () => {
               name={item.name}
               speciality={item.speciality}
               image={item.image}
+              available={item.available}
             />
           </div>
         ))}

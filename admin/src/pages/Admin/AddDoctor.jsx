@@ -4,6 +4,7 @@ import { assets } from "../../assets/assets";
 import { AdminContext } from "./../../context/AdminContext";
 import { toast } from "react-toastify";
 import axios, { formToJSON } from "axios";
+import { AppContext } from "../../context/AppContext";
 
 const AddDoctor = () => {
   const [image, setImage] = useState("");
@@ -18,10 +19,12 @@ const AddDoctor = () => {
   const [about, setAbout] = useState("");
 
   const { backendUrl, aToken } = useContext(AdminContext);
+  const { loading, setLoading } = useContext(AppContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true);
       if (!image) {
         return toast.error("Image not Selected");
       }
@@ -50,7 +53,10 @@ const AddDoctor = () => {
       );
 
       if (!data.success) {
-        return toast.error(data.message);
+        toast.error(data.message);
+        setLoading(false);
+
+        return;
       } else {
         toast.success(data.message);
         setName("");
@@ -63,6 +69,7 @@ const AddDoctor = () => {
         setFees("");
         setExperience("1 Year");
         setSpeciality("General physician");
+        setLoading(false);
       }
     } catch (error) {
       toast.error(error.message);
@@ -224,6 +231,7 @@ const AddDoctor = () => {
           </div>
         </div>
         <button
+          disabled={loading}
           type="submit"
           className="btn bg-primary  text-white w-full max-w-50"
           row={5}

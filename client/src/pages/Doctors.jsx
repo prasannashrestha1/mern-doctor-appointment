@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
+import DocCard from "../components/DocCard";
 
 const Doctors = () => {
   const [resFilter, setResFilter] = useState(true);
@@ -110,26 +111,38 @@ const Doctors = () => {
             Gastroenterologist
           </Link>
         </div>
-
+        {filterDoc.length === 0 && (
+          <div className="w-full min-h-20 text-2xl mt-5">
+            No {speciality} Doctor Available
+          </div>
+        )}
         <div className=" w-full max-h-[80vh] overflow-x-scroll grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 ">
           {filterDoc.map((item, index) => (
-            <Link
-              to={`/appointment/${item._id}`}
-              key={index}
-              className="border m-2 border-[#C9D8FF] rounded-2xl hover:shadow-lg hover:scale-102 transition-all ease-in-out duration-300"
-            >
-              <div className="flex items-center justify-center bg-[#EAEFFF] rounded-t-2xl ">
-                <img src={item.image} />
-              </div>
-              <div className="p-4 flex flex-col gap-1">
-                <div className="text-green-600 flex gap-2 mb-1 items-center">
-                  <div className="w-2 h-2 bg-green-600 rounded-full"></div>
-                  <p>Available</p>
-                </div>
-                <h2 className=" text-2xl">{item.name}</h2>
-                <p className="text-gray-700">{item.speciality}</p>
-              </div>
+            <Link to={`/appointment/${item._id}`} key={index}>
+              <DocCard
+                name={item.name}
+                speciality={item.speciality}
+                image={item.image}
+                available={item.available}
+              />
             </Link>
+            // <Link
+            //   to={`/appointment/${item._id}`}
+            //   key={index}
+            //   className="border m-2 border-[#C9D8FF] rounded-2xl hover:shadow-lg hover:scale-102 transition-all ease-in-out duration-300"
+            // >
+            //   <div className="flex items-center justify-center bg-[#EAEFFF] rounded-t-2xl ">
+            //     <img src={item.image} />
+            //   </div>
+            //   <div className="p-4 flex flex-col gap-1">
+            //     <div className="text-green-600 flex gap-2 mb-1 items-center">
+            //       <div className="w-2 h-2 bg-green-600 rounded-full"></div>
+            //       <p>Available</p>
+            //     </div>
+            //     <h2 className=" text-2xl">{item.name}</h2>
+            //     <p className="text-gray-700">{item.speciality}</p>
+            //   </div>
+            // </Link>
           ))}
         </div>
         {/* {

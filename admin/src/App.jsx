@@ -26,6 +26,15 @@ const App = () => {
     }
   }, [location]);
 
+  useEffect(() => {
+    if (location.pathname === "/login" && aToken) {
+      navigate("/admin-dashboard");
+    }
+    if (location.pathname === "/login" && dToken) {
+      navigate("/doctor-dashboard");
+    }
+  }, [aToken, dToken]);
+
   return aToken || dToken ? (
     <div className="  h-screen">
       <Navbar />

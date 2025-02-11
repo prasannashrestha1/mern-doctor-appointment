@@ -50,6 +50,11 @@ const DoctorAppointment = () => {
           <p className="y-3 px-1 w-[10%] rounded-full h-[30px] flex items-center justify-center cursor-pointer mr-3"></p>
         </header>
         <div className="">
+          {appointments.length === 0 && (
+            <div className="min-h-40 flex justify-center items-center text-slate-600 text-xl">
+              No Appointments Available
+            </div>
+          )}
           {appointments &&
             appointments.map((item, index) => (
               <div
@@ -70,13 +75,17 @@ const DoctorAppointment = () => {
                 <p className="w-[20%] py-3 px-1">{item.amount}</p>
                 <div className="w-[10%] flex gap-1 items-end">
                   {item.cancelled ? (
-                    <p className=" text-red-500 text-xs font-medium">
-                      Cancelled
-                    </p>
+                    <div className="px-4 py-2 rounded-full  bg-red-100">
+                      <p className=" text-red-500 text-xs font-medium">
+                        Cancelled
+                      </p>
+                    </div>
                   ) : item.isCompleted ? (
-                    <p className=" text-green-500 text-xs font-medium">
-                      Completed
-                    </p>
+                    <div className="px-4 py-2 rounded-full  bg-green-100">
+                      <p className=" text-green-500 text-xs font-medium">
+                        Completed
+                      </p>
+                    </div>
                   ) : (
                     <div className="flex gap-1">
                       <div

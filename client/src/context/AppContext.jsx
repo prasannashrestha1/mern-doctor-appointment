@@ -13,6 +13,7 @@ const AppContextProvider = (props) => {
   );
   const [userData, setUserData] = useState({});
   const [allAppointments, setAllAppointments] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const getDoctorsData = async () => {
     try {
@@ -64,6 +65,8 @@ const AppContextProvider = (props) => {
     currencySymbol,
     token,
     setToken,
+    loading,
+    setLoading,
     userData,
     setUserData,
     getCurrentUser,
@@ -84,7 +87,6 @@ const AppContextProvider = (props) => {
     }
   }, [token]);
 
-  console.log(doctors);
   return (
     <AppContext.Provider value={value}>{props.children}</AppContext.Provider>
   );

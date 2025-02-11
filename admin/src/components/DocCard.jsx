@@ -4,7 +4,7 @@ import { AdminContext } from "../context/AdminContext";
 import { toast } from "react-toastify";
 
 const DocCard = ({ id, image, speciality, name, available }) => {
-  const { aToken, backendUrl } = useContext(AdminContext);
+  const { aToken, backendUrl, fetchDoctors } = useContext(AdminContext);
   const handleChangeAvailability = async (docId) => {
     try {
       const { data } = await axios.post(
@@ -19,6 +19,7 @@ const DocCard = ({ id, image, speciality, name, available }) => {
 
       if (data.success) {
         toast.success(data.message);
+        fetchDoctors();
       } else {
         toast.error(data.message);
       }
@@ -35,9 +36,10 @@ const DocCard = ({ id, image, speciality, name, available }) => {
       <div className="p-4 flex flex-col gap-1">
         <div className="text-green-600 flex gap-2 mb-1 items-center">
           <input
+            onChange={() => handleChangeAvailability(id)}
+            checked={available}
             type="checkbox"
             className="w-4 h-4"
-            onClick={() => handleChangeAvailability(id)}
           />
           <p>{available ? "Available" : "Not Available"}</p>
         </div>

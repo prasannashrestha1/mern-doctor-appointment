@@ -35,6 +35,9 @@ const Navbar = () => {
           <NavLink to="/contact" className="navlink">
             CONTACT
           </NavLink>
+          <Link className="px-2 py-1 border border-primary/10 hover:bg-primary bg-primary/50 text-[10px] text-white rounded-full">
+            Admin Panel
+          </Link>
         </div>
         <div className="flex justify-between items-center gap-4">
           {token ? (

@@ -9,10 +9,12 @@ const Navbar = () => {
   const { dToken, setDToken } = useContext(AppContext);
   const navigate = useNavigate();
   const Logout = () => {
-    aToken && localStorage.clear("atoken");
+    localStorage.clear("atoken");
     aToken && setAToken("");
-    dToken && localStorage.clear("dtoken");
+    localStorage.clear("dtoken");
     dToken && setDToken("");
+    navigate("/login");
+    location.reload();
   };
   return (
     <div className="px-10 py-5 flex justify-between items-center border border-[#bec0c3]">

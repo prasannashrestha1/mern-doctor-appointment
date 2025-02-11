@@ -48,6 +48,12 @@ const Dashboard = () => {
             <h2 className="text-lg sm:text-xl">Latest Appointment</h2>
           </div>
           {dashData.latestAppointments &&
+            dashData.latestAppointments.length === 0 && (
+              <div className="min-h-40 flex justify-center items-center text-slate-600 text-xl">
+                No Appointments Available
+              </div>
+            )}
+          {dashData.latestAppointments &&
             dashData.latestAppointments.map((item, index) => (
               <div key={index} className="px-8 py-4 hover:bg-primary/5">
                 <div className="flex gap-4 items-center  ">

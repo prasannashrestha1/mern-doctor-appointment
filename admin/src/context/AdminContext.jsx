@@ -66,6 +66,7 @@ const AdminContextProvider = (props) => {
         }
       );
       if (data.success) {
+        fetchAppoitnments();
         return toast.success(data.message);
       } else {
         toast.error(data.message);

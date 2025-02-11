@@ -174,6 +174,42 @@ const doctorDashboard = async (req, res) => {
   }
 };
 
+//api to get doctor profilefor doctor panel
+const doctorProfile = async (req, res) => {
+  try {
+    const { docId } = req.body;
+    const profileData = await doctorModel.findById(docId).select("-password");
+    res.json({ success: true, profileData });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+//api to update the doctor
+const updateDoctor = async (req, res) => {
+  try {
+    const { docId, available, fees, address } = req.body;
+
+    if (!fees || !address) {
+      return res.json({ sucess: false, message: "All Fields are mandatory" });
+    }
+
+    await doctorModel.findByIdAndUpdate(docId, { available, fees, address });
+    res.json({
+      success: true,
+      message: "User updated successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 export {
   changeAvailability,
   doctorList,
@@ -182,4 +218,6 @@ export {
   appointmentCancel,
   appointmentComplete,
   doctorDashboard,
+  updateDoctor,
+  doctorProfile,
 };
