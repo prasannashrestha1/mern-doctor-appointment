@@ -7,7 +7,7 @@ export default defineConfig({
     port: 5172,
     proxy: {
       "/api": {
-        target: "http://localhost:3000",
+        target: "https://mern-doctor-appointment-backend.onrender.com",
         secure: false,
         changeOrigin: true,
       },
