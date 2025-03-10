@@ -36,7 +36,7 @@ const Navbar = () => {
             CONTACT
           </NavLink>
           <a
-            href="https://mern-doctor-appointment-backend.onrender.com"
+            href="https://mern-doctor-appointment-mbiv.onrender.com"
             className="px-2 py-1 border border-primary/10 hover:bg-primary bg-primary/50 text-[10px] text-white rounded-full"
           >
             Admin Panel
