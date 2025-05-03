@@ -14,10 +14,11 @@ const AppContextProvider = (props) => {
   const [userData, setUserData] = useState({});
   const [allAppointments, setAllAppointments] = useState([]);
   const [loading, setLoading] = useState(false);
+  const backendURL = import.meta.env.VITE_BACKEND_URLS;
 
   const getDoctorsData = async () => {
     try {
-      const { data } = await axios.get("/api/doctor/list");
+      const { data } = await axios.get(`${backendURL}/api/doctor/list`);
       if (data.success) {
         setDoctors(data.allDoctors);
       }
@@ -28,7 +29,7 @@ const AppContextProvider = (props) => {
 
   const getCurrentUser = async () => {
     try {
-      const { data } = await axios.get("/api/user/get-profile", {
+      const { data } = await axios.get(`${backendURL}/api/user/get-profile`, {
         headers: {
           token,
         },
@@ -45,11 +46,14 @@ const AppContextProvider = (props) => {
 
   const retrieveAppointments = async () => {
     try {
-      const { data } = await axios.get("/api/user/list-appointment", {
-        headers: {
-          token,
-        },
-      });
+      const { data } = await axios.get(
+        `${backendURL}/api/user/list-appointment`,
+        {
+          headers: {
+            token,
+          },
+        }
+      );
       if (data.success) {
         setAllAppointments(data.allAppointments.reverse());
       } else {

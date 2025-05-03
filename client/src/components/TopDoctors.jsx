@@ -33,7 +33,7 @@ const TopDoctors = () => {
       </div>
       <button
         onClick={() => {
-          navigate("/doctors");
+          navigate("/doctor");
           scrollTo(0, 0);
         }}
         className="bg-[#EAEFFF] px-16 py-4 rounded-4xl mb-10 cursor-pointer hover:scale-103 transition-all ease-in-out duration-300 hover:shadow"

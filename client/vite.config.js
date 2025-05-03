@@ -5,13 +5,6 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   server: {
     port: 5172,
-    proxy: {
-      "/api": {
-        target: "https://mern-doctor-appointment-backend.onrender.com",
-        secure: false,
-        changeOrigin: true,
-      },
-    },
   },
   plugins: [tailwindcss(), react()],
 });
