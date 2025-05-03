@@ -51,7 +51,7 @@ const Appointment = () => {
       const slotDate = day + "_" + month + "_" + year;
 
       const { data } = await axios.post(
-        "/api/user/book-appointment",
+        `${import.meta.env.VITE_BACKEND_URLS}/api/user/book-appointment`,
         { slotTime, docId, slotDate },
         {
           headers: {

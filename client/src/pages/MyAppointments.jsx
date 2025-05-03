@@ -31,7 +31,7 @@ const MyAppointments = () => {
   const cancelAppointment = async (appointmentId) => {
     try {
       const { data } = await axios.post(
-        "/api/user/cancel-appointment",
+        `${import.meta.env.VITE_BACKEND_URLS}/api/user/cancel-appointment`,
         { appointmentId },
         { headers: { token } }
       );
@@ -81,7 +81,7 @@ const MyAppointments = () => {
             </div>
             {!item.cancelled ? (
               <div className="flex flex-col justify-end gap-4 ">
-                <button className="btn bg-blue-500 text-white">Pay</button>
+                <button className="btn border border-black">COD</button>
                 <button
                   onClick={() => {
                     cancelAppointment(item._id);
