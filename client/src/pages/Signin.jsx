@@ -19,11 +19,14 @@ const Signin = () => {
         if (!email || !password || !name) {
           return toast.error("Please fill in all Credentials");
         }
-        const { data } = await axios.post("/api/user/signup", {
-          name,
-          password,
-          email,
-        });
+        const { data } = await axios.post(
+          `${import.meta.env.VITE_BACKEND_URLS}/api/user/signup`,
+          {
+            name,
+            password,
+            email,
+          }
+        );
 
         if (data.success) {
           localStorage.setItem("token", data.token);
@@ -37,10 +40,13 @@ const Signin = () => {
           return toast.error("Please fill in all Credentials");
         }
 
-        const { data } = await axios.post("/api/user/login", {
-          password,
-          email,
-        });
+        const { data } = await axios.post(
+          `${import.meta.env.VITE_BACKEND_URLS}/api/user/login`,
+          {
+            password,
+            email,
+          }
+        );
 
         if (data.success) {
           localStorage.setItem("token", data.token);
