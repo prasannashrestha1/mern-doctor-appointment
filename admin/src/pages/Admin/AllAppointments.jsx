@@ -58,7 +58,8 @@ const AllAppointments = () => {
                 <p className="w-[20%] py-3 px-1">{item.userData.name}</p>
                 <p className="w-[15%] py-3 px-1">{item.docData.speciality}</p>
                 <p className="w-[7%] py-3 px-1">
-                  {new Date().getFullYear() - item.userData.dob.split("-")[0]}
+                  {/* {new Date().getFullYear() - item.userData.dob.split("-")[0]} */}
+                  -
                 </p>
                 <p className="w-[20%] py-3 px-1">
                   {slotDateFormat(item.slotDate) + " | " + item.slotTime}
