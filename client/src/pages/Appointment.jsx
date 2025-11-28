@@ -161,7 +161,10 @@ const Appointment = () => {
       <div className="flex flex-col items-end gap-10 text-slate-700">
         <div className="flex flex-col w-full lg:flex-row gap-4">
           <div className="bg-primary min-h-[200px] min-w-[200px] w-full sm:max-w-[450px] flex items-end justify-center rounded-xl">
-            <img src={docBio.image} className="min-h-24 min-w-24" />
+            <img
+              src={docBio.image}
+              className="min-h-24 min-w-24 object-contain"
+            />
           </div>
           <div className="flex flex-col gap-5 px-8 py-12 border grow border-slate-400 rounded-xl">
             <div className="flex flex-col gap-2">
